@@ -1,0 +1,82 @@
+
+DESCRIPTION (Revo Exercise)
+============================
+
+Implement Huffman compression algorithm. Two command line utilities:
+
+1. 'encode' -- encodes any input file using Huffman algorithm:
+
+> encode <input-file> <output-file>
+
+2. 'decode' -- decodes input file to the original one:
+
+> decode <input-file> <output-file>
+
+Requirements:
+
+* Pure C or C++ (up to C++14). No any extensions, only standard language
+  features. No assembly code.
+* Makefile as a build system. Don't use CMake! Executing 'make' should
+  build 'encode' and 'decode' binaries.
+* Only standard libraries included with the compiler, i.e. C standard library or
+  C++ standard library (STL). No Boost! No Qt!
+* Encoding and decoding should work as fast as possible.
+ Binaries should not crash (e.g. Segmentation Fault) on any* inputs.
+
+HOW-TO BUILD
+============
+
+## Linux ##
+```
+$ make
+```
+
+If google test framework installed:
+```
+$ make test
+```
+
+## Windows ##
+
+In Visual Studio command prompt
+```
+$ nmake -f Makefile.nmake
+```
+
+If google test framework installed:
+
+#### Define environment variables ####
+
+* `GTEST_ROOT=...`      - Google test root directory.
+* `GMOCK_LIB_ROOT=...`  - Path to Google test/mock libs `gtestd.lib` `gmockd.lib` `gtest_maind.lib`
+
+```
+$ nmake -f Makefile.nmake test
+```
+
+TODO:
+=====
+
+* Optimizations
+* Non-char symbol type
+
+DONE:
+=====
+
+* Makefile and files
+* Model
+* Huffman algorithm tests
+* Bit stream adapter tests
+* Encoder tests
+* Code producer tests
+* Decoder tests
+* Filesystem impl
+* Application bootstrap
+* Integration tests
+
+REFS:
+=====
+https://ru.coursera.org/learn/algorithms-part2/lecture/6Hzrx/huffman-compression
+https://en.wikipedia.org/wiki/Huffman_coding
+
+

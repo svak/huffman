@@ -1,0 +1,14 @@
+**/*perf.data*
+**/a.out
+**/build/*
+**/dump.bin
+*.exe
+*.idb
+*.ilk
+*.o
+*.obj
+*.pdb
+.gdb_history
+decode
+encode
+tests

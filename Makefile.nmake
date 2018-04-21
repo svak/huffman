@@ -1,0 +1,48 @@
+
+CXXFLAGS=/nologo /WX /W4 /wd4200 /wd4815 /wd4373 /MTd /std:c++14 /EHsc /Zi -D_SCL_SECURE_NO_WARNINGS
+
+GTEST_INCLUDE=$(GTEST_INCLUDE) /I$(GTEST_ROOT)/googletest/include
+GTEST_INCLUDE=$(GTEST_INCLUDE) /I$(GTEST_ROOT)/googlemock/include
+
+GTEST_LIBPATH=$(GTEST_LIBPATH) /LIBPATH:$(GMOCK_LIB_ROOT)/googlemock
+GTEST_LIBPATH=$(GTEST_LIBPATH) /LIBPATH:$(GMOCK_LIB_ROOT)/googlemock/gtest
+
+GTEST_LIBS=gtestd.lib gmockd.lib gtest_maind.lib
+
+SOURCES_OBJS=Application.obj \
+		BitsAdapter.obj \
+		Filesystem.obj \
+		HuffmanTree.obj \
+		Processor.obj \
+		SymbolsLookup.obj
+
+TEST_SOURCES_OBJS=$(SOURCES_OBJS) \
+		BitsAdapterTests.obj \
+		DecoderTests.obj \
+		EncoderTests.obj \
+		HuffmanTreeTests.obj \
+		SymbolsLookupTests.obj
+
+all: encode.exe decode.exe
+
+encode.exe: Encode.obj $(SOURCES_OBJS)
+	link /nologo /subsystem:console /out:$@ Encode.obj $(SOURCES_OBJS)
+
+decode.exe: Decode.obj $(SOURCES_OBJS)
+	link /nologo /subsystem:console /out:$@ Decode.obj $(SOURCES_OBJS)
+
+test: tests.exe
+	@tests.exe
+
+tests.exe: $(TEST_SOURCES_OBJS)
+	link $(GTEST_LIBPATH) /nologo /subsystem:console /out:tests.exe $(TEST_SOURCES_OBJS) $(GTEST_LIBS)
+
+.cpp.obj:
+	$(CXX) $(CXXFLAGS) $(GTEST_INCLUDE) -c $*.cpp
+
+clean:
+	del /q *.obj *.pdb
+	del /q decode.exe
+	del /q encode.exe
+	del /q tests.exe
+
