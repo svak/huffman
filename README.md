@@ -31,9 +31,16 @@ HOW-TO BUILD
 $ make
 ```
 
+#### Tests ####
+
 If google test framework installed:
 ```
 $ make test
+```
+
+Integration tests
+```
+$ ./batch_test.sh
 ```
 
 ## Windows ##
@@ -43,15 +50,22 @@ In Visual Studio command prompt
 $ nmake -f Makefile.nmake
 ```
 
+#### Tests ####
+
 If google test framework installed:
 
-#### Define environment variables ####
+Define environment variables:
 
 * `GTEST_ROOT=...`      - Google test root directory.
-* `GMOCK_LIB_ROOT=...`  - Path to Google test/mock libs `gtestd.lib` `gmockd.lib` `gtest_maind.lib`
+* `GMOCK_LIB_ROOT=...`  - Path to Google test/mock _debug_ libs `gtestd.lib` `gmockd.lib` `gtest_maind.lib`
 
 ```
 $ nmake -f Makefile.nmake test
+```
+
+Integration tests
+```
+$ ./batch_test.cmd
 ```
 
 TODO:
@@ -59,20 +73,7 @@ TODO:
 
 * Optimizations
 * Non-char symbol type
-
-DONE:
-=====
-
-* Makefile and files
-* Model
-* Huffman algorithm tests
-* Bit stream adapter tests
-* Encoder tests
-* Code producer tests
-* Decoder tests
-* Filesystem impl
-* Application bootstrap
-* Integration tests
+* CMake
 
 REFS:
 =====
