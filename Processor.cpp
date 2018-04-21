@@ -127,7 +127,7 @@ namespace Processor
             throw std::runtime_error("Decoder: Invalid symbols table.");
         }
 
-        // Build Huffman code's lookup table.
+        // Build Huffman codes lookup table.
         Helpers::SymbolsLookup lookup;
         for (size_t i = 0; i < header->Table.Length; ++i)
         {

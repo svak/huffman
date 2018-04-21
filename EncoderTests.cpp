@@ -41,8 +41,8 @@ TEST(Encoder, ShouldWriteEmptyTableForEmptySource)
         EXPECT_EQ(sizeof(FileHeader), aSize);
 
         auto header = reinterpret_cast<const FileHeader*>(aData);
-        EXPECT_EQ(0, header->FileSize);
-        EXPECT_EQ(0, header->Table.Length);
+        EXPECT_EQ(0u, header->FileSize);
+        EXPECT_EQ(0u, header->Table.Length);
     }));
 
     // When we encode empty file.
@@ -72,15 +72,15 @@ TEST(Encoder, ShouldEncodeOneSymbolSourceFile)
             EXPECT_EQ(0b1, entry->Code.Length);
         }))
         .WillOnce(Invoke([](const char* aData, size_t aSize) {
-            EXPECT_EQ(1, aSize);
+            EXPECT_EQ(1u, aSize);
             auto data = reinterpret_cast<const uint8_t*>(aData);
             EXPECT_EQ("00000000", bits_of(*data));
         }))
         .WillOnce(Invoke([](const char* aData, size_t aSize) {
             EXPECT_EQ(sizeof(FileHeader), aSize);
             auto header = reinterpret_cast<const FileHeader*>(aData);
-            EXPECT_EQ(1, header->FileSize);
-            EXPECT_EQ(1, header->Table.Length);
+            EXPECT_EQ(1u, header->FileSize);
+            EXPECT_EQ(1u, header->Table.Length);
         }));
 
     // When we encode one-byte file.
@@ -112,7 +112,7 @@ TEST(Encoder, ShouldEncodeSimpleStream)
         .WillOnce(Invoke([](const char*, size_t) {}))
         .WillOnce(Invoke([](const char*, size_t) {}))
         .WillOnce(Invoke([](const char* aData, size_t aSize) {
-            EXPECT_EQ(2, aSize);
+            EXPECT_EQ(2u, aSize);
             auto data = reinterpret_cast<const uint8_t*>(aData);
             EXPECT_EQ("00011111", bits_of(*data++));
             EXPECT_EQ("00000000", bits_of(*data++));
@@ -120,8 +120,8 @@ TEST(Encoder, ShouldEncodeSimpleStream)
         .WillOnce(Invoke([](const char* aData, size_t aSize) {
             EXPECT_EQ(sizeof(FileHeader), aSize);
             auto header = reinterpret_cast<const FileHeader*>(aData);
-            EXPECT_EQ(6, header->FileSize);
-            EXPECT_EQ(3, header->Table.Length);
+            EXPECT_EQ(6u, header->FileSize);
+            EXPECT_EQ(3u, header->Table.Length);
         }));
 
     // When we encode AAABBC sequence.

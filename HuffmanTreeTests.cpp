@@ -30,8 +30,8 @@ TEST(HuffmanTree, ShouldBuildDictAndNodes)
     auto tree = builder.Build();
 
     EXPECT_TRUE(tree.Root);
-    EXPECT_EQ(2, tree.Codes.size());
-    EXPECT_EQ(3, tree.Nodes.size());
+    EXPECT_EQ(2u, tree.Codes.size());
+    EXPECT_EQ(3u, tree.Nodes.size());
 }
 
 TEST(HuffmanTree, ShouldCalculateCodeForOneSymbol)
@@ -41,7 +41,7 @@ TEST(HuffmanTree, ShouldCalculateCodeForOneSymbol)
 
     auto tree = builder.Build();
 
-    ASSERT_EQ(1, tree.Codes.size());
+    ASSERT_EQ(1u, tree.Codes.size());
     EXPECT_EQ(0b0, tree.Codes['A'].Value);
     EXPECT_EQ(1, tree.Codes['A'].Length);
 }
@@ -53,7 +53,7 @@ TEST(HuffmanTree, ShouldCalculateCodesWithRespectToSymbolFrequency)
 
     auto tree = builder.Build();
 
-    ASSERT_EQ(3, tree.Codes.size());
+    ASSERT_EQ(3u, tree.Codes.size());
     EXPECT_EQ(0b1, tree.Codes['A'].Value);
     EXPECT_EQ(1, tree.Codes['A'].Length);
     EXPECT_EQ(0b01, tree.Codes['B'].Value);

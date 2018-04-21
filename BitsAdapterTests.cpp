@@ -9,8 +9,8 @@ TEST(BitsAdapter, ShouldInitalizeProperly)
 {
     char buffer[4]{};
     BitsAdapter adapter{buffer, sizeof(buffer)};
-    EXPECT_EQ(32, adapter.RemainingBits());
-    EXPECT_EQ(0, adapter.BytesTaken());
+    EXPECT_EQ(32u, adapter.RemainingBits());
+    EXPECT_EQ(0u, adapter.BytesTaken());
 }
 
 TEST(BitsAdapter, ShouldWriteShortCode)
@@ -20,8 +20,8 @@ TEST(BitsAdapter, ShouldWriteShortCode)
 
     adapter.Write(0b0101, 4);
 
-    EXPECT_EQ(28, adapter.RemainingBits());
-    EXPECT_EQ(1, adapter.BytesTaken());
+    EXPECT_EQ(28u, adapter.RemainingBits());
+    EXPECT_EQ(1u, adapter.BytesTaken());
 
     EXPECT_EQ("01010000", bits_of(buffer[0]));
     EXPECT_EQ("00000000", bits_of(buffer[1]));
@@ -35,8 +35,8 @@ TEST(BitsStream, TwoBytes)
 
     adapter.Write(0b011001101011011, 15);
 
-    EXPECT_EQ(17, adapter.RemainingBits());
-    EXPECT_EQ(2, adapter.BytesTaken());
+    EXPECT_EQ(17u, adapter.RemainingBits());
+    EXPECT_EQ(2u, adapter.BytesTaken());
 
     EXPECT_EQ("01100110", bits_of(buffer[0]));
     EXPECT_EQ("10110110", bits_of(buffer[1]));
@@ -55,8 +55,8 @@ TEST(BitsStream, SequentialWriting)
     adapter.Write(0b11000, 5);
     adapter.Write(0b00001, 5);
 
-    EXPECT_EQ(9, adapter.RemainingBits());
-    EXPECT_EQ(3, adapter.BytesTaken());
+    EXPECT_EQ(9u, adapter.RemainingBits());
+    EXPECT_EQ(3u, adapter.BytesTaken());
 
     EXPECT_EQ("01100110", bits_of(buffer[0]));
     EXPECT_EQ("10110110", bits_of(buffer[1]));
@@ -77,7 +77,7 @@ TEST(BitsStream, SequentialWritingWithBufferReset)
     adapter.Write(0b0101, 4);
     EXPECT_TRUE(adapter.IsFull());
 
-    ASSERT_EQ(4, adapter.BytesTaken());
+    ASSERT_EQ(4u, adapter.BytesTaken());
 
     EXPECT_EQ("01101110", bits_of(buffer[0]));
     EXPECT_EQ("01011101", bits_of(buffer[1]));
@@ -94,7 +94,7 @@ TEST(BitsStream, SequentialWritingWithBufferReset)
     adapter.Write(0b1101, 4);
     EXPECT_FALSE(adapter.IsFull());
 
-    ASSERT_EQ(1, adapter.BytesTaken());
+    ASSERT_EQ(1u, adapter.BytesTaken());
 
     EXPECT_EQ("01101101", bits_of(buffer[0]));
 }
@@ -132,7 +132,7 @@ TEST(BitsStream, SequentialWritingLongCodes)
 
     adapter.Reset();
 
-    ASSERT_EQ(2, adapter.BytesTaken());
+    ASSERT_EQ(2u, adapter.BytesTaken());
 
     EXPECT_EQ("00011001", bits_of(buffer[0]));
     EXPECT_EQ("11000110", bits_of(buffer[1]));

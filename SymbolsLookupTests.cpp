@@ -10,13 +10,13 @@ TEST(SymbolsLookup, ShouldIgnoreZeroLength)
 
     lookup.Put(SymbolInfo{'A', {0b01, 0}});
 
-    ASSERT_EQ(0, lookup.Size());
+    ASSERT_EQ(0u, lookup.Size());
 }
 
 TEST(SymbolsLookup, ShouldFoundNothingIfHasNoData)
 {
     SymbolsLookup lookup;
-    ASSERT_EQ(0, lookup.Size());
+    ASSERT_EQ(0u, lookup.Size());
     EXPECT_FALSE(lookup.Find(0b01, 1).Success);
 }
 
@@ -28,7 +28,7 @@ TEST(SymbolsLookup, ShouldFindSymbolsByLength)
     lookup.Put(SymbolInfo{'A', {0b01, 3}});
     lookup.Put(SymbolInfo{'B', {0b11, 4}});
 
-    ASSERT_EQ(3, lookup.Size());
+    ASSERT_EQ(3u, lookup.Size());
 
     {
         auto find = lookup.Find(0b01, 2);
