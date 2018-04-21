@@ -64,6 +64,9 @@ $ nmake -f Makefile.nmake test
 ```
 
 Integration tests
+
+* `md5sum.exe` - must be in PATH
+
 ```
 $ ./batch_test.cmd
 ```
@@ -80,4 +83,8 @@ REFS:
 https://ru.coursera.org/learn/algorithms-part2/lecture/6Hzrx/huffman-compression
 https://en.wikipedia.org/wiki/Huffman_coding
 
+
+ABOUT
+=====
+:cat: Written from scratch by @svak
 
