@@ -1,4 +1,4 @@
-CXXFLAGS+= -std=c++14 -Wall -g
+CXXFLAGS+= -std=c++14 -Wall
 
 SOURCES=Application.cpp \
 		BitsAdapter.cpp \
@@ -17,17 +17,16 @@ TEST_SOURCES=${SOURCES} \
 all: encode decode
 
 encode: Encode.cpp ${SOURCES}
-	${CXX} ${CXXFLAGS} $^ -o $@ -lpthread
+	${CXX} ${CXXFLAGS} -O3 $^ -o $@ -lpthread
 
 decode: Decode.cpp ${SOURCES}
-	${CXX} ${CXXFLAGS} $^ -o $@ -lpthread
+	${CXX} ${CXXFLAGS} -O3 $^ -o $@ -lpthread
 
-test: ${TEST_SOURCES}
-	${CXX} ${CXXFLAGS} $^ -o tests -lpthread -lgtest -lgmock -lgtest_main
+test: tests
 	./tests
 
-test_build: ${TEST_SOURCES}
-	${CXX} ${CXXFLAGS} $^ -o tests -lpthread -lgtest -lgmock -lgtest_main
+tests: ${TEST_SOURCES}
+	${CXX} ${CXXFLAGS} -g $^ -o tests -lpthread -lgtest -lgmock -lgtest_main
 
 clean:
 	rm -f decode
