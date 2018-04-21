@@ -2,21 +2,18 @@
 #include "Interfaces.hpp"
 #include "TestsBase.hpp"
 
-namespace Helpers
+std::vector<Huffman::TSymbol> MakeBuffer(const std::string& aSource)
 {
-    std::vector<Huffman::TSymbol> MakeBuffer(const std::string& aSource)
-    {
-        std::vector<Huffman::TSymbol> result;
+    std::vector<Huffman::TSymbol> result;
 
-        result.assign(aSource.begin(), aSource.end());
-        return result;
-    }
+    result.assign(aSource.begin(), aSource.end());
+    return result;
 }
 
 TEST(HuffmanTree, ShouldBuildNothingIfNoDataWasGiven)
 {
     Huffman::TreeBuilder builder;
-    builder.Process(Helpers::MakeBuffer(""));
+    builder.Process(MakeBuffer(""));
 
     auto tree = builder.Build();
 
@@ -28,7 +25,7 @@ TEST(HuffmanTree, ShouldBuildNothingIfNoDataWasGiven)
 TEST(HuffmanTree, ShouldBuildDictAndNodes)
 {
     Huffman::TreeBuilder builder;
-    builder.Process(Helpers::MakeBuffer("AAB"));
+    builder.Process(MakeBuffer("AAB"));
 
     auto tree = builder.Build();
 
@@ -40,7 +37,7 @@ TEST(HuffmanTree, ShouldBuildDictAndNodes)
 TEST(HuffmanTree, ShouldCalculateCodeForOneSymbol)
 {
     Huffman::TreeBuilder builder;
-    builder.Process(Helpers::MakeBuffer("A"));
+    builder.Process(MakeBuffer("A"));
 
     auto tree = builder.Build();
 
@@ -52,7 +49,7 @@ TEST(HuffmanTree, ShouldCalculateCodeForOneSymbol)
 TEST(HuffmanTree, ShouldCalculateCodesWithRespectToSymbolFrequency)
 {
     Huffman::TreeBuilder builder;
-    builder.Process(Helpers::MakeBuffer("AAAABBC"));
+    builder.Process(MakeBuffer("AAAABBC"));
 
     auto tree = builder.Build();
 
@@ -65,8 +62,3 @@ TEST(HuffmanTree, ShouldCalculateCodesWithRespectToSymbolFrequency)
     EXPECT_EQ(2, tree.Codes['C'].Length);
 }
 
-TEST(HuffmanTree, ShouldFallbackToOriginalCodesWithTooLargeTree)
-{
-    // TODO: Optimization. If sizeof(Tree) + Encoded data > originalSize
-    // then keep original data with significant data prefix.
-}

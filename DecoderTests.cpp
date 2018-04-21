@@ -121,7 +121,11 @@ TEST(Decoder, ShouldThrowWhenSymbolsTableIsInvalid)
     InputFileMock input;
     OutputFileMock output;
 
-    auto file = EncodedFile().WithTableLength(10).WithEntry('A', 0x00, 2).Build();
+    auto file = EncodedFile()
+        .WithTableLength(10)
+        .WithEntry('A', 0x00, 2)
+        .Build();
+
     SetupSourceFile(input, file);
 
     // We expect that exception will be thrown..
@@ -135,7 +139,11 @@ TEST(Decoder, ShouldAcceptValidSymbolsTable)
     InputFileMock input;
     OutputFileMock output;
 
-    auto file = EncodedFile().WithTableLength(2).WithEntry('A', 0x00, 2).WithEntry('B', 0x00, 2).Build();
+    auto file = EncodedFile()
+        .WithTableLength(2)
+        .WithEntry('A', 0x00, 2)
+        .WithEntry('B', 0x00, 2)
+        .Build();
 
     SetupSourceFile(input, file);
 
@@ -150,7 +158,12 @@ TEST(Decoder, ShouldDecodeSequenceWithRespectToFileSize)
     InputFileMock input;
     OutputFileMock output;
 
-    auto file = EncodedFile().WithFileSize(3).WithTableLength(1).WithEntry('A', 0b1, 1).WithData(0b11111111).Build();
+    auto file = EncodedFile()
+        .WithFileSize(3)
+        .WithTableLength(1)
+        .WithEntry('A', 0b1, 1)
+        .WithData(0b11111111)
+        .Build();
 
     SetupSourceFile(input, file);
 
@@ -168,34 +181,34 @@ TEST(Decoder, ShouldDecodeSequenceWithMinimumBufferSize)
     OutputFileMock output;
 
     auto file = EncodedFile()
-                  .WithFileSize(63)
-                  .WithTableLength(2)
-                  .WithEntry('A', 0b1, 1)
-                  .WithEntry('B', 0b01, 2)
-                  .WithData(0b11111111) // AAAAAAAA
-                  .WithData(0b11111111) // AAAAAAAA
-                  .WithData(0b11111111) // AAAAAAAA
-                  .WithData(0b11111111) // AAAAAAAA
-                  .WithData(0b11111111) // AAAAAAAA
-                  .WithData(0b11111111) // AAAAAAAA
-                  .WithData(0b11111111) // AAAAAAAA
-                  .WithData(0b10101010) // ABBB..
-                  .WithData(0b10110000) // BBA
-                  .Build();
+        .WithFileSize(63)
+        .WithTableLength(2)
+        .WithEntry('A', 0b1, 1)
+        .WithEntry('B', 0b01, 2)
+        .WithData(0b11111111) // AAAAAAAA
+        .WithData(0b11111111) // AAAAAAAA
+        .WithData(0b11111111) // AAAAAAAA
+        .WithData(0b11111111) // AAAAAAAA
+        .WithData(0b11111111) // AAAAAAAA
+        .WithData(0b11111111) // AAAAAAAA
+        .WithData(0b11111111) // AAAAAAAA
+        .WithData(0b10101010) // ABBB..
+        .WithData(0b10110000) // BBA
+        .Build();
 
     SetupSourceFile(input, file);
 
     // We expect that file will be decoded.
     ExpectWrite(output,
-                "AAAAAAAA"
-                "AAAAAAAA"
-                "AAAAAAAA"
-                "AAAAAAAA"
-                "AAAAAAAA"
-                "AAAAAAAA"
-                "AAAAAAAA"
-                "ABBB"
-                "BBA");
+        "AAAAAAAA"
+        "AAAAAAAA"
+        "AAAAAAAA"
+        "AAAAAAAA"
+        "AAAAAAAA"
+        "AAAAAAAA"
+        "AAAAAAAA"
+        "ABBB"
+        "BBA");
 
     // When we process file with small buffer size.
     Processor::Config config;
@@ -211,16 +224,16 @@ TEST(Decoder, ShouldDecodeSequenceWithLongCodedSymbol)
     OutputFileMock output;
 
     auto file = EncodedFile()
-                  .WithFileSize(5)
-                  .WithTableLength(2)
-                  .WithEntry('A', 0b11111111111111111111111111111111, 32)
-                  .WithEntry('B', 0b01, 2)
-                  .WithData(0b11111111) // A..
-                  .WithData(0b11111111) //
-                  .WithData(0b11111111) //
-                  .WithData(0b11111111) //
-                  .WithData(0b01010101) // BBBB
-                  .Build();
+        .WithFileSize(5)
+        .WithTableLength(2)
+        .WithEntry('A', 0b11111111111111111111111111111111, 32)
+        .WithEntry('B', 0b01, 2)
+        .WithData(0b11111111) // A..
+        .WithData(0b11111111) //
+        .WithData(0b11111111) //
+        .WithData(0b11111111) //
+        .WithData(0b01010101) // BBBB
+        .Build();
 
     SetupSourceFile(input, file);
 

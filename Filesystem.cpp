@@ -2,6 +2,8 @@
 
 namespace Filesystem
 {
+    static constexpr size_t BufferSize = 4096;
+
     Reader::Reader(const std::string& aName)
       : mStream{aName, std::ios::in | std::ios::binary}
     {
@@ -14,14 +16,14 @@ namespace Filesystem
 
     bool Reader::ReadTo(TBuffer* aBuffer)
     {
-        char buffer[1024];
+        char buffer[BufferSize];
 
         if (!mStream.good())
         {
             return false;
         }
 
-        mStream.read(buffer, 1024);
+        mStream.read(buffer, BufferSize);
 
         auto count = mStream.gcount();
         aBuffer->assign(buffer, buffer + count);

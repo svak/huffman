@@ -19,6 +19,14 @@ struct OutputFileMock : IStorage::Output
     MOCK_METHOD0(Reset, void());
 };
 
+auto MakeReaderFor(const std::string& aData)
+{
+    return [aData](auto const aBuffer) {
+        aBuffer->assign(aData.begin(), aData.end());
+        return true;
+    };
+}
+
 TEST(Encoder, ShouldWriteEmptyTableForEmptySource)
 {
     // Given input and output file.
@@ -52,9 +60,9 @@ TEST(Encoder, ShouldEncodeOneSymbolSourceFile)
 
     // We expect that we left space for header.
     EXPECT_CALL(output, Skip(Eq(sizeof(FileHeader)))).Times(1);
-    EXPECT_CALL(output, Reset()).Times(1);
 
-    // Write symbols table, data and update header.
+    // Write symbols table, data and stamp header.
+    EXPECT_CALL(output, Reset()).Times(1);
     EXPECT_CALL(output, Write(_, _))
         .WillOnce(Invoke([](const char* aData, size_t aSize) {
             EXPECT_EQ(sizeof(FileHeader::SymbolsTable::Entry), aSize);
@@ -76,21 +84,15 @@ TEST(Encoder, ShouldEncodeOneSymbolSourceFile)
         }));
 
     // When we encode one-byte file.
-    EXPECT_CALL(input, Reset()).Times(1);
+    auto reader = MakeReaderFor("A");
 
     EXPECT_CALL(input, ReadTo(_))
-        .WillOnce(Invoke([](auto* const aBuffer) {
-            std::string data = "A";
-            aBuffer->assign(data.begin(), data.end());
-            return true;
-        }))
+        .WillOnce(Invoke(reader))
         .WillOnce(Return(false))
-        .WillOnce(Invoke([](auto* const aBuffer) {
-            std::string data = "A";
-            aBuffer->assign(data.begin(), data.end());
-            return true;
-        }))
+        .WillOnce(Invoke(reader))
         .WillOnce(Return(false));
+
+    EXPECT_CALL(input, Reset()).Times(1);
 
     Processor::Encode(input, output);
 }
@@ -125,18 +127,12 @@ TEST(Encoder, ShouldEncodeSimpleStream)
     // When we encode AAABBC sequence.
     EXPECT_CALL(input, Reset()).Times(1);
 
+    auto reader = MakeReaderFor("AAABBC");
+
     EXPECT_CALL(input, ReadTo(_))
-        .WillOnce(Invoke([](auto* const aBuffer) {
-            std::string data = "AAABBC";
-            aBuffer->assign(data.begin(), data.end());
-            return true;
-        }))
+        .WillOnce(Invoke(reader))
         .WillOnce(Return(false))
-        .WillOnce(Invoke([](auto* const aBuffer) {
-            std::string data = "AAABBC";
-            aBuffer->assign(data.begin(), data.end());
-            return true;
-        }))
+        .WillOnce(Invoke(reader))
         .WillOnce(Return(false));
 
     Processor::Encode(input, output);
