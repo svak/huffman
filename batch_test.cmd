@@ -1,6 +1,6 @@
 @echo off
 
-set local
+setlocal
 
 for /f "tokens=* " %%f in ('dir /b') do if exist %%f (
     call :CheckFile "%CD%\%%f"
