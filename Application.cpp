@@ -28,6 +28,7 @@ int Application::Run(TRoutine aRoutine, int argc, char** argv)
     catch (std::exception& e)
     {
         std::cout << "Fail: " << e.what() << std::endl;
+        return 1;
     }
 
     return 0;
