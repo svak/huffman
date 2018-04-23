@@ -88,3 +88,4 @@ ABOUT
 =====
 :cat: Written from scratch by @svak
 
+(c) 2018 @svak All rights reserved
