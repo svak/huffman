@@ -138,11 +138,11 @@ namespace Processor
         char* data = source.get() + symbolsTableSize;
         count -= symbolsTableSize;
 
+        // Now, scan compressed data and for each given set of bits we
+        // look for corresponded symbol. If we have one, then write it down.
         Helpers::CodeProducer producer;
         Helpers::StreamWriter<> stream(aOutput);
 
-        // Now, scan compressed data and for each given set of bits we
-        // look for corresponded symbol. If we have one, then write it down.
         size_t totalSize = 0;
 
         auto decoder = [&producer, &lookup, &stream, &totalSize, fileSize](const char* aData, size_t aSize) {
