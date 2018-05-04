@@ -141,10 +141,10 @@ namespace Helpers
 
         auto shift = mRemainingBits - ValueSize;
 
-        unsigned int value = aValue;
+        unsigned value = aValue;
         value <<= shift;
 
-        unsigned int mask = (0xFF << shift);
+        unsigned mask = (0xFF << shift);
 
         mData &= ~mask;
         mData |= value;

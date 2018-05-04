@@ -58,7 +58,9 @@ namespace Processor
         // Write Huffman code for each symbol.
         for (const auto& p : tree.Codes)
         {
-            const auto item = FileHeader::SymbolsTable::Entry{p.first, p.second};
+            const auto& symbol = p.first;
+            const auto& code = p.second;
+            const auto item = FileHeader::SymbolsTable::Entry{symbol, code};
             aOutput.Write(reinterpret_cast<const char*>(&item), sizeof(item));
         }
 
