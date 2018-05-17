@@ -1,5 +1,5 @@
 
-DESCRIPTION (Revo Exercise)
+DESCRIPTION
 ============================
 
 Implement Huffman compression algorithm. Two command line utilities:
