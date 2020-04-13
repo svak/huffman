@@ -80,12 +80,15 @@ TODO:
 
 REFS:
 =====
-https://ru.coursera.org/learn/algorithms-part2/lecture/6Hzrx/huffman-compression
-https://en.wikipedia.org/wiki/Huffman_coding
+
+* https://ru.coursera.org/learn/algorithms-part2/lecture/6Hzrx/huffman-compression
+* https://en.wikipedia.org/wiki/Huffman_coding
 
 
 ABOUT
 =====
 :cat: Written from scratch by @svak
 
-(c) 2019 @svak All rights reserved
+(c) 2018-2020 @svak
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
